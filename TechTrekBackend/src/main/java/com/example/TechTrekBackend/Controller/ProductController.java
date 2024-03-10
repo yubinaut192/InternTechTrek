@@ -12,6 +12,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path="api/v1/products/")
 public class ProductController {
 //    private ProductService productService;
@@ -43,6 +44,7 @@ public class ProductController {
 //            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 //            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
+
     @ResponseBody
     public Product addProduct(@RequestBody Product product){
 //        insert in db
@@ -50,6 +52,29 @@ public class ProductController {
 //        Product test = new Product(21,"Dog Walker",1,"walker for dogs",1,1000);
         return productRepository.save(product);
 //        return new ResponseEntity<>("message: added product", HttpStatus.OK);
+    }
+
+    @PutMapping("updateProduct/{id}")
+    public ResponseEntity<Product> updateProductByID(@PathVariable("id") Long id, @RequestBody Product updatedProduct) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        System.out.println(updatedProduct);
+        if (optionalProduct.isPresent()) {
+            Product existingProduct = optionalProduct.get();
+
+            // Update fields with the new data
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setCategory_id(updatedProduct.getCategory_id());
+            existingProduct.setDesc(updatedProduct.getDesc());
+            existingProduct.setInventory_id(updatedProduct.getInventory_id());
+            existingProduct.setPrice(updatedProduct.getPrice());
+
+            // Save the updated product to the database
+            Product savedProduct = productRepository.save(existingProduct);
+
+            return new ResponseEntity<>(savedProduct, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("deleteByID/{id}")

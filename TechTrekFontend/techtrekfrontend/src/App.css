@@ -1,0 +1,13 @@
+.App {
+  background-color: #282c34;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: left;
+}
+
+.App-Header {
+  background-color: #06b5f4;
+  min-height: 8vh;
+  display: flex;
+  justify-content: center;
+}
