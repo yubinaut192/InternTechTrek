@@ -3,6 +3,8 @@ package com.example.TechTrekBackend.Controller;
 import com.example.TechTrekBackend.Product.Product;
 import com.example.TechTrekBackend.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 
 @RestController
+@EnableCaching
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path="api/v1/products/")
 public class ProductController {
@@ -33,6 +36,7 @@ public class ProductController {
     }
 
 
+    @Cacheable("tutorials")
     @GetMapping("allProducts")
     public List<Product> getAllProducts(){
         return (List<Product>) productRepository.findAll();

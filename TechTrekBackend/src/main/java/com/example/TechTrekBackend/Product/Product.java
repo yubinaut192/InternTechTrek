@@ -17,6 +17,10 @@ public class Product {
     private int id;
     private String name;
     private int category_id;
+    @Column(name = "`desc`")
+    private String desc;
+    private int inventory_id;
+    private float price;
 
     public String getName() {
         return name;
@@ -57,11 +61,6 @@ public class Product {
     public void setPrice(float price) {
         this.price = price;
     }
-
-    @Column(name = "`desc`")
-    private String desc;
-    private int inventory_id;
-    private float price;
 
     public Product(int id, String name, int category_id, String desc, int inventory_id, float price) {
         this.id = id;
