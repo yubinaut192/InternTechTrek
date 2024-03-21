@@ -21,6 +21,7 @@ public class Product {
     private String desc;
     private int inventory_id;
     private float price;
+    private String imageUrl;
 
     public String getName() {
         return name;
@@ -62,12 +63,17 @@ public class Product {
         this.price = price;
     }
 
-    public Product(int id, String name, int category_id, String desc, int inventory_id, float price) {
+    public void setImageURL(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Product(int id, String name, int category_id, String desc, int inventory_id, float price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
         this.desc = desc;
         this.inventory_id = inventory_id;
         this.price = price;
+        this.imageUrl = imageUrl;
     }
 }

@@ -90,8 +90,8 @@ public class RedisConfig {
 
         return RedisCacheManager.builder(redisConnectionFactory())
                 .cacheDefaults(cacheConfig)
-                .withCacheConfiguration("tutorials", myDefaultCacheConfig(Duration.ofMinutes(5)))
-                .withCacheConfiguration("tutorial", myDefaultCacheConfig(Duration.ofMinutes(1)))
+                .withCacheConfiguration("Products", myDefaultCacheConfig(Duration.ofSeconds(10)))
+                .withCacheConfiguration("Product", myDefaultCacheConfig(Duration.ofSeconds(10)))
                 .build();
     }
 

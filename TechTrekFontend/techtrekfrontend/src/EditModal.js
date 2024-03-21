@@ -20,6 +20,8 @@ const StyledModalContent = styled('div')({
 
 const EditModal = ({ open, onClose, onSave, initialData }) => {
   const [editedData, setEditedData] = React.useState(initialData);
+  const [imageFile, setImageFile] = React.useState(null);
+  const [fileName, setFileName] = React.useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +29,18 @@ const EditModal = ({ open, onClose, onSave, initialData }) => {
       ...prevData,
       [name]: value,
     }));
+    // console.log(editedData);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    setImageFile(file);
+    setFileName(file.name); // Set the file name
   };
 
   const handleSave = () => {
-    onSave(editedData);
-    // console.log(editedData);
+    onSave(editedData, imageFile);
   };
 
   return (
@@ -88,15 +97,23 @@ const EditModal = ({ open, onClose, onSave, initialData }) => {
             value={editedData.price}
             onChange={handleInputChange}
             />
-          <TextField
-            label="Image URL"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            name="imageUrl"
-            value={editedData.imageUrl}
-            onChange={handleInputChange}
+          <input
+            accept="image/*"
+            id="contained-button-file"
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
           />
+          <label htmlFor="contained-button-file">
+            <Button variant="contained" component="span">
+              Upload Image
+            </Button>
+          </label>
+          {fileName && (
+            <Typography variant="body1" gutterBottom>
+              File Uploaded: {fileName}
+            </Typography>
+          )}
           <TextField
             label="Description"
             variant="outlined"

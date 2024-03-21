@@ -37,23 +37,25 @@ const RecipeReviewCard = ({
     setEditModalOpen(false);
   };
 
-  const handleSaveEditModal = async (editedData) => {
+  const handleSaveEditModal = async (editedData,imageFile) => {
+    console.log("edit model saved");
     try {
-        const customJson = {
-            id: id,
-            name: editedData.title,
-            category_id: editedData.categoryId,
-            inventory_id: editedData.inventoryId,
-            price: editedData.price,
-            desc: editedData.description
-          };
-      console.log(customJson);
+      const formData = new FormData();
+      formData.append('imageFile', imageFile);
+      console.log(formData.get('imageFile'));
+      formData.append('product', JSON.stringify({
+        id: parseInt(editedData.id),
+        name: editedData.title,
+        category_id: editedData.categoryId, 
+        inventory_id: editedData.inventoryId, 
+        price: editedData.price, 
+        desc: editedData.description
+        }
+      ));
+      console.log(formData.get('product'));
       const response = await fetch(`http://localhost:8080/api/v1/products/updateProduct/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(customJson),
+        method: 'POST',
+        body: formData,
       });
   
       if (response.ok) {
@@ -103,7 +105,7 @@ const RecipeReviewCard = ({
 
   return (
     <>
-      <Card sx={{ minWidth: 300, maxWidth: 345, border: 20, borderRadius: 8, borderColor: '#282c34' }}>
+      <Card sx={{ minWidth: 300, maxWidth: 300, border: 20, borderRadius: 8, borderColor: '#282c34' }}>
         <CardHeader
           title={title}
           subheader={"MRP Rs." + price}

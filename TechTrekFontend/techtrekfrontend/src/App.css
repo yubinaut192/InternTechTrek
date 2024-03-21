@@ -6,8 +6,11 @@
 }
 
 .App-Header {
-  background-color: #06b5f4;
-  min-height: 8vh;
+  background-color: #1c6e8c;
+  max-height: 12vh;
   display: flex;
+  min-height: 10vh;
+  padding-top: 15px;
+  margin: 0;
   justify-content: center;
 }
